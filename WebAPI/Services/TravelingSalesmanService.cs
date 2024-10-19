@@ -1,4 +1,4 @@
-﻿using WebAPI.Models;
+﻿using WebAPI.Entities;
 using WebAPI.ServiceContracts;
 
 namespace WebAPI.Services
@@ -20,11 +20,11 @@ namespace WebAPI.Services
 			}
 		}
 
-		public Task<List<int>> SolveProblemAsync(List<Point> points)
+		public Task<TravelingSalesmanResult> SolveProblemAsync(TravelingSalesmanInputData input)
 		{
-			Workload += points.Count;
-			var result = new List<int> { 1, 2, 3 };
-			Workload -= points.Count;
+			Workload += input.Points.Count;
+			var result = new TravelingSalesmanResult { ComputedAt = DateTime.UtcNow, Path = [1, 2, 3], Id = input.Id };
+			Workload -= input.Points.Count;
 			return Task.FromResult(result);
 		}
 	}

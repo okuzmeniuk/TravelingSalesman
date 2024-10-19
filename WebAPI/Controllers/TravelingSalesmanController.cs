@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebAPI.Models;
 using WebAPI.ServiceContracts;
 
 namespace WebAPI.Controllers
@@ -19,13 +18,6 @@ namespace WebAPI.Controllers
 		public IActionResult GetWorkload()
 		{
 			return Ok(_travelingSalesmanService.Workload);
-		}
-
-		[HttpPost("solve")]
-		public async Task<IActionResult> PostSolveAsync(List<Point> points)
-		{
-			var result = await _travelingSalesmanService.SolveProblemAsync(points);
-			return Ok(result);
 		}
 	}
 }

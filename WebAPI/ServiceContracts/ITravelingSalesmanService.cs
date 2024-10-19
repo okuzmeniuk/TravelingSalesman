@@ -1,4 +1,4 @@
-﻿using WebAPI.Models;
+﻿using WebAPI.Entities;
 
 namespace WebAPI.ServiceContracts
 {
@@ -6,6 +6,6 @@ namespace WebAPI.ServiceContracts
 	{
 		int Workload { get; }
 
-		Task<List<int>> SolveProblemAsync(List<Point> points);
+		Task<TravelingSalesmanResult> SolveProblemAsync(TravelingSalesmanInputData input);
 	}
 }
