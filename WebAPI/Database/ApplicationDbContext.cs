@@ -9,6 +9,7 @@ namespace WebAPI.Database
 	{
 		public DbSet<TravelingSalesmanInputData> InputData { get; set; }
 		public DbSet<TravelingSalesmanResult> Results { get; set; }
+		public DbSet<ProblemSolvingProgress> Progresses { get; set; }
 
 		public ApplicationDbContext() : base() { }
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
@@ -17,6 +18,7 @@ namespace WebAPI.Database
 		{
 			var inputDataBuilder = modelBuilder.Entity<TravelingSalesmanInputData>();
 			var resultBuilder = modelBuilder.Entity<TravelingSalesmanResult>();
+			var progressBuilder = modelBuilder.Entity<ProblemSolvingProgress>();
 			var serializerOptions = new JsonSerializerOptions();
 
 			inputDataBuilder.HasKey(x => x.Id);
@@ -32,6 +34,9 @@ namespace WebAPI.Database
 					p => JsonSerializer.Deserialize<List<int>>(p, serializerOptions) ?? new List<int>()
 			);
 			resultBuilder.Property(x => x.ComputedAt).HasDefaultValueSql("GETDATE()");
+
+			progressBuilder.HasKey(x => x.Id);
+			progressBuilder.Property(x => x.Progress).HasDefaultValue(0);
 		}
 	}
 }
