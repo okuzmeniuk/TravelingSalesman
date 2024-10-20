@@ -5,7 +5,7 @@ using WebAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton<ITravelingSalesmanService, TravelingSalesmanService>();
+builder.Services.AddScoped<ITravelingSalesmanService, TravelingSalesmanService>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
