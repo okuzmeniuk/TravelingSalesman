@@ -31,7 +31,7 @@ namespace WebAPI.Database
 			resultBuilder.HasKey(x => x.Id);
 			resultBuilder.Property(x => x.Path).HasConversion(
 					p => JsonSerializer.Serialize(p, serializerOptions),
-					p => JsonSerializer.Deserialize<List<int>>(p, serializerOptions) ?? new List<int>()
+					p => JsonSerializer.Deserialize<List<Point>>(p, serializerOptions) ?? new List<Point>()
 			);
 			resultBuilder.Property(x => x.ComputedAt).HasDefaultValueSql("GETDATE()");
 

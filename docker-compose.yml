@@ -1,8 +1,6 @@
-version: '3.4'
-
 services:
-  webapi1:
-    image: ${DOCKER_REGISTRY-}webapi
+  traveling-salesman-api1:
+    image: ${DOCKER_REGISTRY-}traveling-salesman-api
     build:
       context: .
       dockerfile: WebAPI/Dockerfile
@@ -16,9 +14,11 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+    depends_on:
+      - traveling-salesman-db
 
-  webapi2:
-    image: ${DOCKER_REGISTRY-}webapi
+  traveling-salesman-api2:
+    image: ${DOCKER_REGISTRY-}traveling-salesman-api
     build:
       context: .
       dockerfile: WebAPI/Dockerfile
@@ -32,3 +32,28 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+    depends_on:
+      - traveling-salesman-db
+
+  traveling-salesman-db:
+    container_name: traveling-salesman-db-container
+    image: mcr.microsoft.com/mssql/server:latest
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "12345678"
+      MSSQL_DATA_DIR: /var/opt/mssql/data
+      MSSQL_PID: "Developer"
+      MSSQL_TCP_PORT: 1433
+    ports:
+      - "1433:1433"
+    networks:
+      - traveling-salesman-network
+    volumes:
+      - ./api/data:/var/opt/mssql/data
+      - ./api/log:/var/opt/mssql/log
+      - ./api/secrets:/var/opt/mssql/secrets
+  
+networks:
+  traveling-salesman-network:
+    driver: bridge
+    
