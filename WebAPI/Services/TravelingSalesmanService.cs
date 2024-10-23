@@ -11,6 +11,7 @@ namespace WebAPI.Services
 		private static int _workload = 0;
 		private readonly object _lock = new();
 		private readonly ApplicationDbContext _db;
+		private readonly IServiceProvider _serviceProvider;
 
 		public int Workload
 		{
@@ -31,9 +32,10 @@ namespace WebAPI.Services
 			}
 		}
 
-		public TravelingSalesmanService(ApplicationDbContext db)
+		public TravelingSalesmanService(ApplicationDbContext db, IServiceProvider serviceProvider)
 		{
 			_db = db;
+			_serviceProvider = serviceProvider;
 		}
 
 		public async Task<TravelingSalesmanInputData> StartSolveAsync(List<Point> points)
@@ -77,7 +79,7 @@ namespace WebAPI.Services
 
 		private async Task SolveAsync(TravelingSalesmanInputData inputData)
 		{
-			List<Point> points = inputData.Points;
+            List<Point> points = inputData.Points;
 			int n = points.Count;
 			bool[] visited = new bool[n];
 			List<Point> bestPath = [];
@@ -96,9 +98,11 @@ namespace WebAPI.Services
 				}
 			}
 
-			var progress = await _db.Progresses.FindAsync(inputData.Id);
+            using var scope = _serviceProvider.CreateAsyncScope();
+            var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            var progress = await db.Progresses.FindAsync(inputData.Id);
 
-			void DFS(int currentIndex, double currentCost)
+			async Task DFS(int currentIndex, double currentCost)
 			{
 				if (currentCost >= bestCost)
 				{
@@ -123,7 +127,7 @@ namespace WebAPI.Services
 						visited[i] = true;
 						currentPath.Add(points[i]);
 
-						DFS(i, currentCost + (currentPath.Count > 1 ? distances[currentIndex, i] : 0));
+						await DFS(i, currentCost + (currentPath.Count > 1 ? distances[currentIndex, i] : 0));
 
 						currentPath.RemoveAt(currentPath.Count - 1);
 						visited[i] = false;
@@ -135,15 +139,15 @@ namespace WebAPI.Services
 					{
 						lastReportedProgress = percentage;
 						progress.Progress = percentage;
-						_db.Progresses.Update(progress);
-						_db.SaveChanges();
+						db.Progresses.Update(progress);
+						await db.SaveChangesAsync();
 					}
 				}
 			}
 
 			visited[0] = true;
 			currentPath.Add(points[0]);
-			DFS(0, 0);
+			await DFS(0, 0);
 
 			var result = new TravelingSalesmanResult
 			{
@@ -153,9 +157,9 @@ namespace WebAPI.Services
 				ComputedAt = DateTime.UtcNow
 			};
 
-			_db.Results.Add(result);
+			db.Results.Add(result);
 			progress.Progress = 100;
-			_db.Progresses.Update(progress);
+			db.Progresses.Update(progress);
 			await _db.SaveChangesAsync();
 			Workload -= n;
 		}
