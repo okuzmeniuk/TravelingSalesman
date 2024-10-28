@@ -135,7 +135,7 @@ namespace WebAPI.Services
 
 					currentPathesAmount++;
 					int percentage = (int)(currentPathesAmount * 100.0d / totalPathesAmount);
-					if (percentage > lastReportedProgress)
+					if (percentage > lastReportedProgress + 3)
 					{
 						lastReportedProgress = percentage;
 						progress.Progress = percentage;
@@ -149,18 +149,18 @@ namespace WebAPI.Services
 			currentPath.Add(points[0]);
 			await DFS(0, 0);
 
-			var result = new TravelingSalesmanResult
+            TravelingSalesmanResult result = new()
 			{
 				Id = inputData.Id,
 				Path = bestPath,
 				TotalDistance = bestCost,
-				ComputedAt = DateTime.UtcNow
+				ComputedAt = DateTime.Now
 			};
 
-			db.Results.Add(result);
+			await db.Results.AddAsync(result);
 			progress.Progress = 100;
 			db.Progresses.Update(progress);
-			await _db.SaveChangesAsync();
+			await db.SaveChangesAsync();
 			Workload -= n;
 		}
 	}
