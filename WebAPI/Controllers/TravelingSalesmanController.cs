@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebAPI.Models;
-using WebAPI.ServiceContracts;
+using Domain.ServiceContracts;
+using Domain.Models;
 
 namespace WebAPI.Controllers
 {

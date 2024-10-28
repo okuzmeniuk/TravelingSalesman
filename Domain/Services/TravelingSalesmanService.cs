@@ -1,12 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
-using WebAPI.Database;
-using WebAPI.Entities;
-using WebAPI.Models;
-using WebAPI.ServiceContracts;
+﻿using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+using Domain.Database;
+using Domain.Entities;
+using Domain.Models;
+using Domain.ServiceContracts;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace WebAPI.Services
+namespace Domain.Services
 {
-	public class TravelingSalesmanService : ITravelingSalesmanService
+    public class TravelingSalesmanService : ITravelingSalesmanService
 	{
 		private static int _workload = 0;
 		private readonly object _lock = new();

@@ -1,6 +1,6 @@
-﻿using WebAPI.Models;
+﻿using Domain.Models;
 
-namespace WebAPI.Entities
+namespace Domain.Entities
 {
 	public class TravelingSalesmanInputData
 	{

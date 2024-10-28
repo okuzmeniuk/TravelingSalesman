@@ -1,9 +1,10 @@
-﻿using WebAPI.Entities;
-using WebAPI.Models;
+﻿using Domain.Entities;
+using Domain.Entities;
+using Domain.Models;
 
-namespace WebAPI.ServiceContracts
+namespace Domain.ServiceContracts
 {
-	public interface ITravelingSalesmanService
+    public interface ITravelingSalesmanService
 	{
 		int Workload { get; }
 

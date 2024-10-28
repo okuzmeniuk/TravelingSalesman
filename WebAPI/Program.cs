@@ -1,7 +1,7 @@
+using Domain.Database;
 using Microsoft.EntityFrameworkCore;
-using WebAPI.Database;
-using WebAPI.ServiceContracts;
-using WebAPI.Services;
+using Domain.ServiceContracts;
+using Domain.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
