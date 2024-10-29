@@ -26,31 +26,5 @@ namespace WebAPI.Controllers
 		{
 			return Ok(await _travelingSalesmanService.StartSolveAsync(points));
 		}
-
-		[HttpGet("progress/{id:guid}")]
-		public async Task<IActionResult> GetProgress(Guid id)
-		{
-			try
-			{
-				return Ok(await _travelingSalesmanService.GetProgressAsync(id));
-			}
-			catch (ArgumentException ex)
-			{
-				return StatusCode(StatusCodes.Status404NotFound, ex.Message);
-			}
-		}
-
-		[HttpGet("result/{id:guid}")]
-		public async Task<IActionResult> GetResult(Guid id)
-		{
-			try
-			{
-				return Ok(await _travelingSalesmanService.GetResultAsync(id));
-			}
-			catch (ArgumentException ex)
-			{
-				return StatusCode(StatusCodes.Status404NotFound, ex.Message);
-			}
-		}
 	}
 }

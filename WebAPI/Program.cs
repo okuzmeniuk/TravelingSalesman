@@ -6,6 +6,7 @@ using Domain.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<ITravelingSalesmanService, TravelingSalesmanService>();
+builder.Services.AddLogging();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     string? connectionStringTemplate = builder.Configuration.GetConnectionString("DockerDb");
@@ -15,10 +16,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 });
 
 builder.Services.AddControllers();
+
 var app = builder.Build();
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
-
 app.Run();

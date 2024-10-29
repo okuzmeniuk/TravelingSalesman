@@ -75,6 +75,7 @@ services:
       - ASPNETCORE_HTTPS_PORTS=8081
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/home/app/.aspnet/https/aspnetapp.pfx
       - ASPNETCORE_Kestrel__Certificates__Default__Password=123456789
+      - MSSQL_SA_PASSWORD=Admin@123
     ports:
       - "8070:8080"
       - "8071:8081"
@@ -84,6 +85,7 @@ services:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
     depends_on:
+      - traveling-salesman-db
       - traveling-salesman-api-1
       - traveling-salesman-api-2
     
