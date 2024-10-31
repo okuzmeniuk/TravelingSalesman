@@ -6,8 +6,6 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-builder.Services.AddLogging();
-builder.Services.AddHttpClient();
 builder.Services.AddScoped<ITravelingSalesmanService, TravelingSalesmanService>();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {

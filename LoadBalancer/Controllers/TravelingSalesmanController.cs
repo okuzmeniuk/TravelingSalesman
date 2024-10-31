@@ -12,9 +12,14 @@ namespace LoadBalancer.Controllers
         private readonly IConfiguration _configuration;
         private readonly ITravelingSalesmanService _travelingSalesmanService;
 
-        public TravelingSalesmanController(HttpClient httpClient, IConfiguration configuration, ITravelingSalesmanService travelingSalesmanService)
+        public TravelingSalesmanController(IConfiguration configuration, ITravelingSalesmanService travelingSalesmanService)
         {
-            _httpClient = httpClient;
+            HttpClientHandler clientHandler = new()
+            {
+                ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true
+            };
+            _httpClient = new HttpClient(clientHandler);
+
             _configuration = configuration;
             _travelingSalesmanService = travelingSalesmanService;
         }
@@ -38,13 +43,13 @@ namespace LoadBalancer.Controllers
             }
 
             var serverWithMinWorkload = workloadPerServerUrl.MinBy(p => p.Value).Key;
-            var startSolveRequest = new HttpRequestMessage(HttpMethod.Post, serverWithMinWorkload)
+            var startSolveRequest = new HttpRequestMessage(HttpMethod.Post, new Uri(serverWithMinWorkload, "api/traveling-salesman/solve/"))
             {
                 Content = JsonContent.Create(points),
             };
 
             var startSolveResponse = await _httpClient.SendAsync(startSolveRequest);
-            return Json(await startSolveRequest.Content.ReadAsStringAsync());
+            return Ok(await startSolveResponse.Content.ReadAsStringAsync());
         }
 
         [HttpGet("progress/{id:guid}")]
