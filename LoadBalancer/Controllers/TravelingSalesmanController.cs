@@ -27,6 +27,11 @@ namespace LoadBalancer.Controllers
         [HttpPost("solve")]
         public async Task<IActionResult> StartSolving(List<Point> points)
         {
+            if (points.Count > 30)
+            {
+                return BadRequest("Amount of points shouldn't exceed 30");
+            }
+
             var serverUrls = _configuration.GetSection("Servers")
                                            .AsEnumerable()
                                            .Where(pair => !string.IsNullOrEmpty(pair.Value))
