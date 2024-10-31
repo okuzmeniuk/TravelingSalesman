@@ -5,9 +5,9 @@ VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "WebAPI\WebAPI.csproj", "{A85BDAA3-3FFD-4BF8-915A-ADFA23BB8153}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoadBalancer", "LoadBalancer\LoadBalancer.csproj", "{9F966FCC-176B-4434-8FE3-8D7A2859CF68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoadBalancer", "LoadBalancer\LoadBalancer.csproj", "{9F966FCC-176B-4434-8FE3-8D7A2859CF68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{9B7F10E8-0688-4D45-9793-D1D0F8853284}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{9B7F10E8-0688-4D45-9793-D1D0F8853284}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

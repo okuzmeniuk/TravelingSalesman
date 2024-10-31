@@ -1,6 +1,6 @@
-using Domain.Database;
-using Domain.ServiceContracts;
-using Domain.Services;
+using Application.Database;
+using Application.ServiceContracts;
+using Application.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
