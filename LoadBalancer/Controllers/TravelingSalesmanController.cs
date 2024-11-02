@@ -1,11 +1,13 @@
 ﻿using Application.Models;
 using Application.ServiceContracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LoadBalancer.Controllers;
 
 [Route("api/traveling-salesman")]
 [ApiController]
+[Authorize]
 public class TravelingSalesmanController : Controller
 {
     private readonly HttpClient _httpClient;

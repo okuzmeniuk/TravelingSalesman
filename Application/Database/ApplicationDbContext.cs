@@ -2,10 +2,12 @@
 using System.Text.Json;
 using Application.Entities;
 using Application.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Application.Identity;
 
 namespace Application.Database;
 
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
 {
     public DbSet<TravelingSalesmanInputData> InputData { get; set; }
     public DbSet<TravelingSalesmanResult> Results { get; set; }
