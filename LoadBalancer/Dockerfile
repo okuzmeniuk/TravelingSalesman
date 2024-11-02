@@ -13,7 +13,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["LoadBalancer/LoadBalancer.csproj", "LoadBalancer/"]
-COPY ["Domain/Domain.csproj", "Domain/"]
+COPY ["Application/Application.csproj", "Application/"]
 RUN dotnet restore "./LoadBalancer/LoadBalancer.csproj"
 COPY . .
 WORKDIR "/src/LoadBalancer"
