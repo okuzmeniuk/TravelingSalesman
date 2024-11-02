@@ -46,9 +46,11 @@ export class RegisterComponent {
 
   onRegister(): void {
     if (this.registerForm.valid) {
-      const { email, password } = this.registerForm.value;
+      const email = this.registerForm.value.email;
+      const password = this.registerForm.value.password;
+      const confirmPassword = this.registerForm.value.confirmPassword;
       this.authService
-        .register({ email, password, confirmPassword: password })
+        .register({ email, password, confirmPassword})
         .subscribe({
           next: (response) => console.log('Registration successful!', response),
           error: (error) => console.error('Registration error', error),

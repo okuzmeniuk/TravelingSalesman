@@ -27,8 +27,8 @@ builder.Services.AddCors(options =>
     {
         policyBuilder
         .WithOrigins(builder.Configuration.GetSection("AllowedOrigins").Get<string[]>())
-        .WithHeaders("Authorization", "origin", "accept", "content-type")
-        .WithMethods("GET", "POST", "PUT", "DELETE");
+        .AllowAnyHeader()
+        .AllowAnyMethod();
     });
 });
 
@@ -68,10 +68,6 @@ builder.Services.AddAuthentication(options =>
  });
 
 var app = builder.Build();
-
-using var scope = app.Services.CreateScope();
-await using var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-await dbContext.Database.MigrateAsync();
 
 app.UseHttpsRedirection();
 app.UseAuthentication();

@@ -18,6 +18,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
+        
         var inputDataBuilder = modelBuilder.Entity<TravelingSalesmanInputData>();
         var resultBuilder = modelBuilder.Entity<TravelingSalesmanResult>();
         var progressBuilder = modelBuilder.Entity<ProblemSolvingProgress>();

@@ -11,7 +11,7 @@ import { RegisterInformation } from './register/register.model';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'https://localhost:8071/api/auth';
+  private apiUrl = 'https://localhost:8071/api/account';
   private tokenKey = 'authToken';
   private jwtHelper = new JwtHelperService();
 
