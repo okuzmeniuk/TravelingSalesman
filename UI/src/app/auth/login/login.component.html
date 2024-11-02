@@ -1,9 +1,42 @@
-<form [formGroup]="loginForm" (ngSubmit)="onLogin()">
-    <mat-form-field>
-      <input matInput placeholder="Email" formControlName="email">
+<div class="container">
+  <h2>Login</h2>
+  <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+    <mat-form-field class="full-width">
+      <input
+        matInput
+        placeholder="Email"
+        formControlName="email"
+        type="email"
+        required
+      />
+      @if(loginForm.get('email')?.hasError('required')) {
+      <mat-error>Email is required</mat-error>
+      } @if(loginForm.get('email')?.hasError('email')) {
+      <mat-error>Enter a valid email</mat-error>
+      }
     </mat-form-field>
-    <mat-form-field>
-      <input matInput type="password" placeholder="Password" formControlName="password">
+
+    <mat-form-field class="full-width">
+      <input
+        matInput
+        placeholder="Password"
+        formControlName="password"
+        type="password"
+        required
+      />
+      @if(loginForm.get('password')?.hasError('required')) {
+      <mat-error>Password is required</mat-error>
+      }
     </mat-form-field>
-    <button mat-raised-button color="primary" type="submit">Login</button>
+
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="loginForm.invalid"
+      class="full-width"
+    >
+      Login
+    </button>
   </form>
+</div>
