@@ -12,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<ITravelingSalesmanService, TravelingSalesmanService>();
+builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     string? connectionStringTemplate = builder.Configuration.GetConnectionString("DockerDb");
@@ -35,11 +36,11 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
 {
-    options.Password.RequiredLength = 5;
+    options.Password.RequiredLength = 6;
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequireUppercase = false;
-    options.Password.RequireLowercase = true;
-    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireDigit = false;
 })
  .AddEntityFrameworkStores<ApplicationDbContext>()
  .AddDefaultTokenProviders()
@@ -69,7 +70,9 @@ builder.Services.AddAuthentication(options =>
 
 var app = builder.Build();
 
+app.UseHsts();
 app.UseHttpsRedirection();
+app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

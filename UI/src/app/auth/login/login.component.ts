@@ -36,7 +36,10 @@ export class LoginComponent {
 
   onLogin(): void {
     if (this.loginForm.valid) {
-      this.authService.login(this.loginForm.value).subscribe({
+      const email = this.loginForm.value.email;
+      const password = this.loginForm.value.password;
+      
+      this.authService.login({Email: email, Password: password}).subscribe({
         next: (response) => console.log('Login successful!', response),
         error: (error) => console.error('Login error', error),
       });
