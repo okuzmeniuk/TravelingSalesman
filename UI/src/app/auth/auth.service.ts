@@ -1,4 +1,3 @@
-
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -8,7 +7,7 @@ import { LoginInformation } from './login/login.model';
 import { RegisterInformation } from './register/register.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private apiUrl = 'https://localhost:8071/api/account';
@@ -18,9 +17,9 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   login(credentials: LoginInformation): Observable<any> {
-    return this.http.post<{ token: string }>(`${this.apiUrl}/login`, credentials).pipe(
-      tap(response => this.setToken(response.token))
-    );
+    return this.http
+      .post<{ token: string }>(`${this.apiUrl}/login`, credentials)
+      .pipe(tap((response) => this.setToken(response.token)));
   }
 
   register(user: RegisterInformation): Observable<any> {

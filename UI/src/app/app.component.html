@@ -1,22 +1,12 @@
 <mat-toolbar color="primary">
   <span>Traveling Salesman App</span>
   <span class="spacer"></span>
-  <button *ngIf="!authService.isAuthenticated()" mat-button routerLink="/login">
-    Login
-  </button>
-  <button
-    *ngIf="!authService.isAuthenticated()"
-    mat-button
-    routerLink="/register"
-  >
-    Register
-  </button>
-  <button *ngIf="authService.isAuthenticated()" mat-button routerLink="/tsp">
-    TSP Canvas
-  </button>
-  <button *ngIf="authService.isAuthenticated()" mat-button (click)="logout()">
-    Logout
-  </button>
+  @if(!authService.isAuthenticated()){
+  <button mat-button routerLink="/login">Login</button>
+  <button mat-button routerLink="/register">Register</button>
+  } @else {
+  <button mat-button (click)="logout()">Logout</button>
+  }
 </mat-toolbar>
 
 <router-outlet></router-outlet>

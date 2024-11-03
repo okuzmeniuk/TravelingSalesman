@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -26,8 +27,13 @@ import { AuthService } from '../auth.service';
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  error = signal<string | null>(null);
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -38,10 +44,14 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       const email = this.loginForm.value.email;
       const password = this.loginForm.value.password;
-      
-      this.authService.login({Email: email, Password: password}).subscribe({
-        next: (response) => console.log('Login successful!', response),
-        error: (error) => console.error('Login error', error),
+
+      this.authService.login({ Email: email, Password: password }).subscribe({
+        next: (response) => {
+          this.router.navigateByUrl('');
+        },
+        error: (error) => {
+          this.error.set(error.error.detail);
+        },
       });
     }
   }

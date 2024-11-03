@@ -58,5 +58,9 @@
     >
       Register
     </button>
+
+    @if(error()) {
+    <mat-error>{{ error() }}</mat-error>
+    }
   </form>
 </div>

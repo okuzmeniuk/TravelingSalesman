@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -26,8 +27,13 @@ import { AuthService } from '../auth.service';
 })
 export class RegisterComponent {
   registerForm: FormGroup;
+  error = signal<string | null>(null);
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.registerForm = this.fb.group(
       {
         email: ['', [Validators.required, Validators.email]],
@@ -50,10 +56,19 @@ export class RegisterComponent {
       const password = this.registerForm.value.password;
       const confirmPassword = this.registerForm.value.confirmPassword;
       this.authService
-        .register({ Email: email, Password: password, ConfirmPassword: confirmPassword})
+        .register({
+          Email: email,
+          Password: password,
+          ConfirmPassword: confirmPassword,
+        })
         .subscribe({
-          next: (response) => console.log('Registration successful!', response),
-          error: (error) => console.error('Registration error', error),
+          next: (response) => {
+            this.authService.login({ Email: email, Password: password });
+            this.router.navigateByUrl('');
+          },
+          error: (error) => {
+            this.error.set(error.error.detail);
+          },
         });
     }
   }
