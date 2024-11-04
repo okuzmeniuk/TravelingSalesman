@@ -1,0 +1,10 @@
+.points-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 85px);
+  gap: 16px;
+}
+
+.point-input {
+  display: flex;
+  flex-direction: column;
+}

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { JwtHelperService } from '@auth0/angular-jwt';
 import { tap } from 'rxjs/operators';
 import { LoginInformation } from './login/login.model';
 import { RegisterInformation } from './register/register.model';
@@ -12,7 +11,6 @@ import { RegisterInformation } from './register/register.model';
 export class AuthService {
   private apiUrl = 'https://localhost:8071/api/account';
   private tokenKey = 'authToken';
-  private jwtHelper = new JwtHelperService();
 
   constructor(private http: HttpClient) {}
 
@@ -36,7 +34,7 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     const token = this.getToken();
-    return token != null && !this.jwtHelper.isTokenExpired(token);
+    return token != null;
   }
 
   logout(): void {
