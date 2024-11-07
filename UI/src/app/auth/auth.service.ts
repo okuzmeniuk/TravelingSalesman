@@ -39,5 +39,6 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem(this.tokenKey);
+    this.http.get(`${this.apiUrl}/logout`).subscribe();
   }
 }

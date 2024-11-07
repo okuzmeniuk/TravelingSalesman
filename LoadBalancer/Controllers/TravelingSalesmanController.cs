@@ -84,4 +84,10 @@ public class TravelingSalesmanController : Controller
             return StatusCode(StatusCodes.Status404NotFound, ex.Message);
         }
     }
+
+    [HttpGet("history")]
+    public async Task<IActionResult> GetResultsHistory()
+    {
+        return Ok(await _travelingSalesmanService.GetInputHistoryAsync());
+    }
 }

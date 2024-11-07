@@ -10,4 +10,5 @@ public interface ITravelingSalesmanService
     Task<TravelingSalesmanInputData> StartSolveAsync(List<Point> points);
     Task<ProblemSolvingProgress> GetProgressAsync(Guid id);
     Task<TravelingSalesmanResult> GetResultAsync(Guid id);
+    Task<List<TravelingSalesmanInputData>> GetInputHistoryAsync();
 }

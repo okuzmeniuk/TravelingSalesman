@@ -36,14 +36,8 @@ export class TravelingSalesmanInputComponent {
     for (let i = 0; i < n; i++) {
       this.pointsArray.push(
         this.fb.group({
-          X: [
-            null,
-            [Validators.required, Validators.min(0), Validators.max(500)],
-          ],
-          Y: [
-            null,
-            [Validators.required, Validators.min(0), Validators.max(500)],
-          ],
+          X: [null, [Validators.required]],
+          Y: [null, [Validators.required]],
         })
       );
     }

@@ -28,16 +28,8 @@
           placeholder="X{{ i + 1 }}"
           formControlName="X"
           type="number"
-          min="0"
-          max="500"
           required
         />
-        @if (pointControl.get('X')?.hasError('required')) {
-        <mat-error>X is required</mat-error>
-        } @if (pointControl.get('X')?.hasError('min') ||
-        pointControl.get('X')?.hasError('max')) {
-        <mat-error>Enter a value between 0 and 500</mat-error>
-        }
       </mat-form-field>
 
       <mat-form-field appearance="outline">
@@ -46,16 +38,8 @@
           placeholder="Y{{ i + 1 }}"
           formControlName="Y"
           type="number"
-          min="0"
-          max="500"
           required
         />
-        @if (pointControl.get('Y')?.hasError('required')) {
-        <mat-error>Y is required</mat-error>
-        } @if (pointControl.get('Y')?.hasError('min') ||
-        pointControl.get('Y')?.hasError('max')) {
-        <mat-error>Enter a value between 0 and 500</mat-error>
-        }
       </mat-form-field>
     </div>
     }

@@ -78,6 +78,9 @@ public class TravelingSalesmanService : ITravelingSalesmanService
         return result;
     }
 
+    public async Task<List<TravelingSalesmanInputData>> GetInputHistoryAsync()
+        => await _db.InputData.AsNoTracking().ToListAsync();
+
     private async Task SolveAsync(TravelingSalesmanInputData inputData)
     {
         List<Point> points = inputData.Points;
