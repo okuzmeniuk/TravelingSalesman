@@ -1,0 +1,26 @@
+mat-card {
+  margin: 8px;
+}
+
+mat-card-header {
+  justify-content: center;
+}
+
+.points-inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 14px;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.point-item {
+  background-color: #e0f7fa;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+mat-progress-bar {
+  width: 100%;
+}

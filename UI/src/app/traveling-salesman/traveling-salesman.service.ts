@@ -19,8 +19,8 @@ export class TravelingSalesmanService {
 
   getProgress(id: string): Observable<number> {
     return this.http
-      .get<{ Id: string; Progress: number }>(`${this.apiUrl}/progress/${id}`)
-      .pipe(map((response) => response.Progress));
+      .get<{ id: string; progress: number }>(`${this.apiUrl}/progress/${id}`)
+      .pipe(map((response) => response.progress));
   }
 
   getResult(id: string): Observable<TravelingSalesmanResult> {
@@ -29,8 +29,8 @@ export class TravelingSalesmanService {
     );
   }
 
-  postSolve(points: Point[]): Observable<TravelingSalesmanResult> {
-    return this.http.post<TravelingSalesmanResult>(
+  postSolve(points: Point[]): Observable<TravelingSalesmanInput> {
+    return this.http.post<TravelingSalesmanInput>(
       `${this.apiUrl}/solve`,
       points
     );

@@ -6,7 +6,7 @@
       formControlName="n"
       type="number"
       min="2"
-      max="30"
+      max="15"
       required
       (change)="onPointsCountChange()"
     />
@@ -14,7 +14,7 @@
     <mat-error>Amount of points is required</mat-error>
     } @if (inputForm.get('n')?.hasError('min') ||
     inputForm.get('n')?.hasError('max')) {
-    <mat-error>Enter a number between 2 and 30</mat-error>
+    <mat-error>Enter a number between 2 and 15</mat-error>
     }
   </mat-form-field>
 
@@ -49,3 +49,6 @@
     Submit
   </button>
 </form>
+@if(error()){
+<mat-error>Server error occured. See console for details.</mat-error>
+}

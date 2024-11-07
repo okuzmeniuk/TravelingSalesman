@@ -1,4 +1,4 @@
 <div class="container">
-  <app-traveling-salesman-input />
-  <app-traveling-salesman-task-list />
+  <app-traveling-salesman-input (onRequestSend)="onRequestSend($event)" />
+  <app-traveling-salesman-task-list [tasks]="tasks()" />
 </div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, output, signal } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -8,6 +8,8 @@ import {
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { TravelingSalesmanService } from '../traveling-salesman.service';
+import { TravelingSalesmanInput } from './traveling-salesman-input.model';
 
 @Component({
   selector: 'app-traveling-salesman-input',
@@ -17,10 +19,15 @@ import { MatInputModule } from '@angular/material/input';
   styleUrl: './traveling-salesman-input.component.css',
 })
 export class TravelingSalesmanInputComponent {
+  error = signal<boolean>(false);
+  onRequestSend = output<TravelingSalesmanInput>();
   inputForm: FormGroup;
   pointsArray: FormArray;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    public travelingSalesmanService: TravelingSalesmanService,
+    private fb: FormBuilder
+  ) {
     this.inputForm = this.fb.group({
       n: [2, [Validators.required, Validators.min(2), Validators.max(30)]],
       points: this.fb.array([]),
@@ -45,14 +52,24 @@ export class TravelingSalesmanInputComponent {
 
   onPointsCountChange(): void {
     const n = this.inputForm.get('n')?.value;
-    if (n >= 2 && n <= 30) {
+    if (n >= 2 && n <= 15) {
       this.updatePointsFields(n);
     }
   }
 
   onSubmit(): void {
     if (this.inputForm.valid) {
-      console.log(this.inputForm.value);
+      this.travelingSalesmanService
+        .postSolve(this.inputForm.value.points)
+        .subscribe({
+          next: (value) => {
+            this.onRequestSend.emit(value);
+          },
+          error: (err) => {
+            this.error.set(true);
+            console.log(err);
+          },
+        });
     }
   }
 }

@@ -1,1 +1,3 @@
-<p>traveling-salesman-task-list works!</p>
+@for(task of tasks(); track task.id){
+<app-traveling-salesman-task [taskInput]="task" />
+}

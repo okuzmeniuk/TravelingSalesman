@@ -1,1 +1,46 @@
-<p>traveling-salesman-task works!</p>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Task ID: {{ task().id }}</mat-card-title>
+    <mat-card-subtitle>Status: {{ task().status }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <p>
+      Created at:
+      {{ task().createdAt | date : "medium" }}
+    </p>
+
+    <mat-card-subtitle>Input Points:</mat-card-subtitle>
+    <div class="points-inline">
+      @for (point of task().inputPoints; track $index) {
+      <span class="point-item">({{ point.x }}, {{ point.y }})</span>
+      }
+    </div>
+
+    <div>
+      @if(task().status === 'running') {
+      <p>Task is currently running... ({{ progress() }}%)</p>
+      <mat-progress-bar
+        mode="determinate"
+        [value]="progress()"
+      ></mat-progress-bar>
+      } @if(task().status === 'complete') {
+      <mat-card-subtitle>Completed Task Details</mat-card-subtitle>
+      <p>Total Distance: {{ task().totalDistance }}</p>
+      <p>
+        Computed At:
+        {{ task().computedAt | date : "medium" }}
+      </p>
+
+      <mat-card-subtitle>Path:</mat-card-subtitle>
+      <div class="points-inline">
+        @for (point of task().path; track $index) {
+        <span class="point-item">({{ point.x }}, {{ point.y }})</span>
+        }
+      </div>
+      } @if(task().status === 'canceled') {
+      <p>Task was canceled.</p>
+      }
+    </div>
+  </mat-card-content>
+</mat-card>

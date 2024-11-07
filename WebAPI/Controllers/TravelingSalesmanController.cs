@@ -20,7 +20,7 @@ public class TravelingSalesmanController : ControllerBase
 
     [HttpPost("solve")]
     public async Task<IActionResult> StartSolving(List<Point> points)
-        => points.Count > 30
-        ? BadRequest("Amount of points shouldn't exceed 30")
+        => points.Count > 15
+        ? BadRequest("Amount of points shouldn't exceed 15")
         : Ok(await _travelingSalesmanService.StartSolveAsync(points));
 }
